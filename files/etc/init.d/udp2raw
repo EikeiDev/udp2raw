@@ -32,6 +32,8 @@ start_instance() {
 	config_get key "$1" key
 	config_get raw_mode "$1" raw_mode
 	config_get log_level "$1" log_level
+	config_get cipher_mode "$1" cipher_mode
+	config_get auth_mode "$1" auth_mode
 
 	[ -z "$name" -o -z "$listen_port" -o -z "$remote_ip" -o -z "$remote_port" -o -z "$key" -o -z "$raw_mode" ] && {
 		echo "Skipping incomplete instance configuration."
@@ -47,7 +49,9 @@ start_instance() {
 		-r "$remote_ip:$remote_port" \
 		-k "$key" \
 		--raw-mode "$raw_mode" \
-		--log-level "$log_level"
+		--log-level "$log_level" \
+		--cipher-mode "$cipher_mode" \
+		--auth-mode "$auth_mode"
 	procd_set_param respawn
 	procd_close_instance
 }

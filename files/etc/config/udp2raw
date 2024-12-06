@@ -1,14 +1,16 @@
 config global
 	option enabled '1'
-	option default_log_level '4'
+	option default_log_level '3'
 
 config instance
-	option name 'default_client'
-	option mode 'client'            # 客户端模式
+	option name 'default'
+	option mode 'client'
 	option listen_ip '127.0.0.1'
 	option listen_port '56789'
 	option remote_ip '45.66.77.88'
 	option remote_port '45678'
 	option key 'my_awesome_password'
 	option raw_mode 'faketcp'
-	option log_level '4'
+	option log_level '3'
+	option cipher-mode 'xor'
+	option auth-mode 'simple'
