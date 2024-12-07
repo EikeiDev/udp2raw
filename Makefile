@@ -5,7 +5,7 @@ PKG_VERSION:=20230206.0
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)_binaries.tar.gz
-PKG_SOURCE_URL:=https://github.com/wangyu-/udp2raw/releases/latest/download/$(PKG_SOURCE)
+PKG_SOURCE_URL:=https://github.com/wangyu-/udp2raw/releases/latest/download/
 PKG_HASH:=skip
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
