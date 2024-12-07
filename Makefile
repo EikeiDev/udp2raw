@@ -36,11 +36,11 @@ define Build/Configure
 endef
 
 define Build/Compile
-ifeq ($(CONFIG_TARGET_x86_64),y)
-	$(MAKE) -C $(PKG_BUILD_DIR) amd64_hw_aes
-else
-	$(MAKE) -C $(PKG_BUILD_DIR)
-endif
+	ifeq ($(CONFIG_TARGET_x86_64),y)
+		$(MAKE) -C $(PKG_BUILD_DIR) amd64_hw_aes
+	else
+		$(MAKE) -C $(PKG_BUILD_DIR)
+	endif
 endef
 
 define Package/udp2raw/conffiles
