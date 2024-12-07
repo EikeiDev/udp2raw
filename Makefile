@@ -40,7 +40,7 @@ endef
 
 define Package/udp2raw/install
 	$(INSTALL_DIR) $(1)/usr/bin
-    $(INSTALL_BIN) $(PKG_BUILD_DIR)/udp2raw_amd64_hw_aes $(1)/usr/bin/udp2raw
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/udp2raw_amd64_hw_aes $(1)/usr/bin/udp2raw
 	
 	$(INSTALL_DIR) $(1)/etc/config
 	$(INSTALL_CONF) ./files/etc/config/udp2raw $(1)/etc/config/udp2raw
