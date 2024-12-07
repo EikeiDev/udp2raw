@@ -31,7 +31,16 @@ define Build/Configure
 	$(call Build/Configure/Default)
 	$(SED) 's/cc_local[[:space:]]*=.*/cc_local=$(TARGET_CXX)/' \
 		-e 's/\\".*shell git rev-parse HEAD.*\\"/\\"$(PKG_SOURCE_VERSION)\\"/' \
+		-e 's/cc_amd64[[:space:]]*=.*/cc_amd64=$(TARGET_CXX)/' \
 		$(PKG_BUILD_DIR)/makefile
+endef
+
+define Build/Compile
+ifeq ($(CONFIG_TARGET_x86_64),y)
+    $(MAKE) -C $(PKG_BUILD_DIR) amd64_hw_aes
+else
+    $(MAKE) -C $(PKG_BUILD_DIR)
+endif
 endef
 
 define Package/udp2raw/conffiles
