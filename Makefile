@@ -26,6 +26,11 @@ define Package/udp2raw/description
 	udp2raw is a tunnel which turns UDP traffic into encrypted FakeTCP/UDP/ICMP traffic.
 	Supports multiple instances.
 endef
+
+define Build/Prepare
+    $(call Build/Prepare/Default)
+    $(TAR) -C $(PKG_BUILD_DIR) -xzf $(DL_DIR)/$(PKG_NAME)-$(PKG_VERSION).tar.gz
+endef
 	
 define Build/Configure
 	$(call Build/Configure/Default)
