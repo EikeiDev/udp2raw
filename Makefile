@@ -36,7 +36,7 @@ define Build/Compile
         CFLAGS="$(TARGET_CFLAGS) -std=c++11 -Wall -Wextra -Wno-unused-variable -Wno-unused-parameter -Wno-missing-field-initializers" \
         LDFLAGS="$(TARGET_LDFLAGS) -lpthread -lrt" \
         PLATFORM="$(ARCH)" \
-        udp2raw
+        all
 endef
 
 define Package/udp2raw/conffiles
@@ -46,7 +46,7 @@ endef
 define Package/udp2raw/install
 	# 安装二进制文件
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/udp2raw $(1)/usr/bin/udp2raw
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/udp2raw_mp $(1)/usr/bin/udp2raw
 
 	# 安装配置文件
 	$(INSTALL_DIR) $(1)/etc/config
