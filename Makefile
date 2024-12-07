@@ -34,6 +34,14 @@ define Build/Prepare
 	$(TAR) -xzvf $(DL_DIR)/$(PKG_SOURCE) -C $(PKG_BUILD_DIR)
 endef
 
+define Build/Configure
+	# 不需要配置
+endef
+
+define Build/Compile
+	# 不需要编译
+endef
+
 define Package/udp2raw/conffiles
 /etc/config/udp2raw
 endef
