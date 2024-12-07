@@ -17,7 +17,6 @@ PKG_MAINTAINER:=Your Name <your.email@example.com>
 PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
-include $(INCLUDE_DIR)/cmake.mk
 
 define Package/udp2raw
   SECTION:=net
@@ -31,19 +30,13 @@ define Package/udp2raw/description
   udp2raw is a tunnel which turns UDP traffic into encrypted FakeTCP/UDP/ICMP traffic. Supports multiple instances.
 endef
 
-define Build/Prepare
-    mkdir -p $(PKG_BUILD_DIR)
-    cd $(PKG_BUILD_DIR) && git clone $(PKG_SOURCE_URL) . && git checkout $(PKG_SOURCE_VERSION)
-endef
-
 define Build/Compile
-	$(Build/Prepare)
-	$(MAKE) -C $(PKG_BUILD_DIR) \
-		CC=$(TARGET_CXX) \
-		CFLAGS="$(TARGET_CFLAGS) -std=c++11 -Wall -Wextra -Wno-unused-variable -Wno-unused-parameter -Wno-missing-field-initializers" \
-		LDFLAGS="$(TARGET_LDFLAGS) -lpthread -lrt -static" \
-		PLATFORM=$(ARCH) \
-		udp2raw
+    $(MAKE) -C $(PKG_BUILD_DIR) \
+        CC="$(TARGET_CXX)" \
+        CFLAGS="$(TARGET_CFLAGS) -std=c++11 -Wall -Wextra -Wno-unused-variable -Wno-unused-parameter -Wno-missing-field-initializers" \
+        LDFLAGS="$(TARGET_LDFLAGS) -lpthread -lrt" \
+        PLATFORM="$(ARCH)" \
+        udp2raw
 endef
 
 define Package/udp2raw/conffiles
