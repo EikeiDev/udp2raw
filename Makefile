@@ -15,16 +15,16 @@ PKG_MAINTAINER:=Your Name <your.email@example.com>
 include $(INCLUDE_DIR)/package.mk
 
 define Package/udp2raw
-  SECTION:=net
-  CATEGORY:=Network
-  TITLE:=udp2raw tunnel
-  URL:=https://github.com/wangyu-/udp2raw
-  DEPENDS:=+libstdcpp +libpthread +librt
+	SECTION:=net
+	CATEGORY:=Network
+	TITLE:=udp2raw tunnel
+	URL:=https://github.com/wangyu-/udp2raw
+	DEPENDS:=+libstdcpp +libpthread +librt
 endef
 
 define Package/udp2raw/description
-  udp2raw is a tunnel which turns UDP traffic into encrypted FakeTCP/UDP/ICMP traffic.
-  Supports multiple instances.
+	udp2raw is a tunnel which turns UDP traffic into encrypted FakeTCP/UDP/ICMP traffic.
+	Supports multiple instances.
 endef
 	
 define Build/Configure
@@ -37,9 +37,9 @@ endef
 
 define Build/Compile
 ifeq ($(CONFIG_TARGET_x86_64),y)
-    $(MAKE) -C $(PKG_BUILD_DIR) amd64_hw_aes
+	$(MAKE) -C $(PKG_BUILD_DIR) amd64_hw_aes
 else
-    $(MAKE) -C $(PKG_BUILD_DIR)
+	$(MAKE) -C $(PKG_BUILD_DIR)
 endif
 endef
 
