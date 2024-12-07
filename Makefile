@@ -28,8 +28,8 @@ define Package/udp2raw/description
 endef
 
 define Build/Prepare
-    $(call Build/Prepare/Default)
-    $(TAR) -C $(PKG_BUILD_DIR) -xzf $(DL_DIR)/$(PKG_NAME)-$(PKG_VERSION).tar.gz
+	$(call Build/Prepare/Default)
+	$(TAR) -C $(PKG_BUILD_DIR) -xzf $(DL_DIR)/$(PKG_NAME)-$(PKG_VERSION).tar.gz
 endef
 	
 define Build/Configure
