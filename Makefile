@@ -41,8 +41,15 @@ endef
 
 define Build/Compile
 	$(if $(CONFIG_TARGET_x86_64),\
-		$(MAKE) -C $(PKG_BUILD_DIR) amd64_hw_aes,\
-		$(MAKE) -C $(PKG_BUILD_DIR)\
+		$(MAKE) -C $(PKG_BUILD_DIR) \
+			LIBS="-lstdc++ -lm -pthread -lrt" \
+			CXXFLAGS="$(TARGET_CXXFLAGS)" \
+			LDFLAGS="$(TARGET_LDFLAGS)" \
+			amd64_hw_aes,\
+		$(MAKE) -C $(PKG_BUILD_DIR) \
+			LIBS="-lstdc++ -lm -pthread -lrt" \
+			CXXFLAGS="$(TARGET_CXXFLAGS)" \
+			LDFLAGS="$(TARGET_LDFLAGS)" \
 	)
 endef
 
