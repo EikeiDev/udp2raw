@@ -1,2 +1,2 @@
 # udp2raw
-udp2raw openwrt
+udp2raw openwrt x86_64 aes
