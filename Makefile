@@ -7,6 +7,7 @@ PKG_RELEASE:=1
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/wangyu-/udp2raw.git
 PKG_SOURCE_VERSION:=HEAD
+PKG_SOURCE_DATE:=2024-12-07
 PKG_MIRROR_HASH:=skip
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -23,11 +24,16 @@ define Package/udp2raw
   CATEGORY:=Network
   TITLE:=udp2raw tunnel
   URL:=https://github.com/wangyu-/udp2raw
-  DEPENDS:=+libpthread +librt
+  DEPENDS:=+libpthread +librt @(x86_64||amd64)
 endef
 
 define Package/udp2raw/description
-  udp2raw is a tunnel which turns UDP traffic into encrypted FakeTCP/UDP/ICMP traffic. Supports multiple instances.
+  udp2raw is a tunnel which turns UDP traffic into encrypted FakeTCP/UDP/ICMP traffic.
+  Supports multiple instances.
+endef
+
+define Build/Prepare
+    $(call Build/Prepare/Default)
 endef
 
 define Build/Compile
@@ -35,8 +41,7 @@ define Build/Compile
         CC="$(TARGET_CXX)" \
         CFLAGS="$(TARGET_CFLAGS) -std=c++11 -Wall -Wextra -Wno-unused-variable -Wno-unused-parameter -Wno-missing-field-initializers" \
         LDFLAGS="$(TARGET_LDFLAGS) -lpthread -lrt" \
-        PLATFORM="$(ARCH)" \
-        all
+        amd64_hw_aes
 endef
 
 define Package/udp2raw/conffiles
@@ -44,17 +49,14 @@ define Package/udp2raw/conffiles
 endef
 
 define Package/udp2raw/install
-	# 安装二进制文件
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/udp2raw_mp $(1)/usr/bin/udp2raw
-
-	# 安装配置文件
-	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_CONF) ./files/etc/config/udp2raw $(1)/etc/config/udp2raw
-
-	# 安装启动脚本
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/etc/init.d/udp2raw $(1)/etc/init.d/udp2raw
+    $(INSTALL_DIR) $(1)/usr/bin
+    $(INSTALL_BIN) $(PKG_BUILD_DIR)/udp2raw_amd64_hw_aes $(1)/usr/bin/udp2raw
+    
+    $(INSTALL_DIR) $(1)/etc/config
+    $(INSTALL_CONF) ./files/etc/config/udp2raw $(1)/etc/config/udp2raw
+    
+    $(INSTALL_DIR) $(1)/etc/init.d
+    $(INSTALL_BIN) ./files/etc/init.d/udp2raw $(1)/etc/init.d/udp2raw
 endef
 
 $(eval $(call BuildPackage,udp2raw))
