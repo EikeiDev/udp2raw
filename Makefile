@@ -3,14 +3,14 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=udp2raw
 PKG_VERSION:=1.0.0
 PKG_RELEASE:=1
-
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/wangyu-/udp2raw.git
-PKG_SOURCE_VERSION:=$(shell git rev-parse HEAD)
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_VERSION:=HEAD
+PKG_MIRROR_HASH:=skip
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
+PKG_LICENSE:=MIT
+PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Your Name <your.email@example.com>
 
 include $(INCLUDE_DIR)/package.mk
 
