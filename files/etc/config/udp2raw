@@ -1,9 +1,8 @@
-config global
+config global 'main'
 	option enabled '1'
 	option default_log_level '3'
 
-config instance
-	option name 'default'
+config instance 'default'
 	option mode 'client'
 	option listen_ip '127.0.0.1'
 	option listen_port '56789'

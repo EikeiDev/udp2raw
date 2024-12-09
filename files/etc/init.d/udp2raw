@@ -7,62 +7,62 @@ USE_PROCD=1
 PROG=/usr/bin/udp2raw
 
 start_service() {
-	config_load udp2raw
+    config_load udp2raw
 
-	local enabled default_log_level
-	config_get enabled global enabled
-	config_get default_log_level global default_log_level
+    local enabled default_log_level
+    config_get enabled main enabled
+    config_get default_log_level main default_log_level
 
-	[ "$enabled" != "1" ] && {
-		echo "udp2raw service is disabled."
-		return 1
-	}
+    [ "$enabled" != "1" ] && {
+        echo "udp2raw service is disabled."
+        return 1
+    }
 
-	[ -z "$default_log_level" ] && default_log_level=4
+    [ -z "$default_log_level" ] && default_log_level=4
 
-	config_foreach start_instance instance "$default_log_level"
+    config_foreach start_instance instance "$default_log_level"
 }
 
 start_instance() {
-	local default_log_level="$1"
-	shift
-	local name mode listen_ip listen_port remote_ip remote_port key raw_mode log_level cipher_mode auth_mode
+    local section="$1"
+	local default_log_level="$2"
+    local mode listen_ip listen_port remote_ip remote_port key raw_mode log_level cipher_mode auth_mode
 
-	config_get name "$1" name
-	config_get mode "$1" mode
-	config_get listen_ip "$1" listen_ip
-	config_get listen_port "$1" listen_port
-	config_get remote_ip "$1" remote_ip
-	config_get remote_port "$1" remote_port
-	config_get key "$1" key
-	config_get raw_mode "$1" raw_mode
-	config_get log_level "$1" log_level
-	config_get cipher_mode "$1" cipher_mode
-	config_get auth_mode "$1" auth_mode
+    config_get mode "$section" mode
+    config_get listen_ip "$section" listen_ip
+    config_get listen_port "$section" listen_port
+    config_get remote_ip "$section" remote_ip
+    config_get remote_port "$section" remote_port
+    config_get key "$section" key
+    config_get raw_mode "$section" raw_mode
+    config_get log_level "$section" log_level
+    config_get cipher_mode "$section" cipher_mode
+    config_get auth_mode "$section" auth_mode
 
-	if [ -z "$name" ] || [ -z "$listen_port" ] || [ -z "$remote_ip" ] || [ -z "$remote_port" ] || [ -z "$key" ] || [ -z "$raw_mode" ]; then
-		echo "Skipping incomplete instance configuration for instance $name."
-		return
-	fi
+    if [ -z "$listen_port" ] || [ -z "$remote_ip" ] || [ -z "$remote_port" ] || [ -z "$key" ] || [ -z "$raw_mode" ]; then
+        echo "Skipping incomplete instance configuration for instance $name."
+        return
+    fi
 
-	[ -z "$log_level" ] && log_level=$default_log_level
+    [ -z "$log_level" ] && log_level=$default_log_level
 
-	echo "Starting udp2raw instance: $name"
+    echo "Starting udp2raw instance: $1"
 
-	procd_open_instance "$name"
-	procd_set_param command $PROG \
-		$(if [ "$mode" = "server" ]; then echo "-s"; else echo "-c"; fi) \
-		-l "$listen_ip:$listen_port" \
-		-r "$remote_ip:$remote_port" \
-		-k "$key" \
-		--raw-mode "$raw_mode" \
-		--log-level "$log_level" \
-		--cipher-mode "$cipher_mode" \
-		--auth-mode "$auth_mode"
-	procd_set_param respawn
-	procd_close_instance
+    procd_open_instance "$1"
+    procd_set_param command $PROG \
+        $(if [ "$mode" = "server" ]; then echo "-s"; else echo "-c"; fi) \
+        -l "$listen_ip:$listen_port" \
+        -r "$remote_ip:$remote_port" \
+        -k "$key" \
+        --raw-mode "$raw_mode" \
+        --log-level "$log_level" \
+        --cipher-mode "$cipher_mode" \
+        --auth-mode "$auth_mode"
+    procd_set_param respawn
+    procd_close_instance
 }
 
 stop_service() {
-	procd_kill $PROG
+    procd_kill $PROG
 }
+
