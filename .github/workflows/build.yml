@@ -25,8 +25,9 @@ jobs:
 
     - name: Prepare custom package
       run: |
-        mkdir -p sdk/package/custom
-        cp -r . sdk/package/custom/udp2raw
+        mkdir -p sdk/package/custom/udp2raw
+        cp -r $(ls -A) sdk/package/custom/udp2raw
+
 
     - name: Update feeds
       working-directory: sdk
