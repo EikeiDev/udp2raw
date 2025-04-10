@@ -41,7 +41,7 @@ jobs:
         make package/custom/udp2raw/compile V=s
 
     - name: Upload package
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: udp2raw-ipk
         path: sdk/bin/packages/*/*/*.ipk
